@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const {Circle, Square, Triangle} = require('./lib/shapes');
+const { Circle, Square, Triangle } = require('./lib/shapes');
 
 function userPrompt() {
     inquirer
@@ -18,7 +18,7 @@ function userPrompt() {
             {
                 type: 'list',
                 message: 'Select the shape you would like your logo to be',
-                choices: ['Cirlce', 'Square', 'Triangle'],
+                choices: ['Circle', 'Square', 'Triangle'],
                 name: 'logoShape',
             },
             {
@@ -35,41 +35,42 @@ function userPrompt() {
                 writeToFile('logo.svg', answers);
             }
         });
-    };
-userPrompt();
+}
 
 function writeToFile(fileName, answers) {
-    let svgString = "";
-    svgString = '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
+    let svgString = '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
     svgString += "<g>";
-    svgString += `${answers.shape}`;
-  
-    let shapeChoice;
+    svgString += answers.logoShape;
+
     const shapeProperties = {
-      Circle: { tag: "circle", cx: "150", cy: "115", r: "80" },
-      Square: { tag: "rect", x: "73", y: "40", width: "160", height: "160" },
-      Triangle: { tag: "polygon", points: "150, 18 244, 182 56, 182" },
+        Circle: { tag: "circle", cx: "150", cy: "115", r: "80" },
+        Square: { tag: "rect", x: "73", y: "40", width: "160", height: "160" },
+        Triangle: { tag: "polygon", points: "150, 18 244, 182 56, 182" },
     };
-  
-    if (answers.shape in shapeProperties) {
-      shapeChoice = new (eval(answers.shape))();
-      const shapeProps = shapeProperties[answers.shape];
-      let shapeString = `<${shapeProps.tag}`;
-      for (const prop in shapeProps) {
-        if (prop !== "tag") {
-          shapeString += ` ${prop}="${shapeProps[prop]}"`;
+
+    if (answers.logoShape in shapeProperties) {
+        const shapeProps = shapeProperties[answers.logoShape];
+        let shapeString = `<${shapeProps.tag}`;
+        for (const prop in shapeProps) {
+            if (prop !== "tag") {
+                shapeString += ` ${prop}="${shapeProps[prop]}"`;
+            }
         }
-      }
-      shapeString += ` fill="${answers.shapeBackgroundColor}"/>`;
-      svgString += shapeString;
+        shapeString += ` fill="${answers.shapeColor}"/>`;
+        svgString += shapeString;
     }
-  
-    svgString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.text}</text>`;
+
+    svgString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.logoText}</text>`;
     svgString += "</g>";
     svgString += "</svg>";
-  
+
     fs.writeFile(fileName, svgString, (err) => {
-      err ? console.log(err) : console.log("Generated logo.svg");
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Generated logo.svg");
+        }
     });
-  }
-  
+}
+
+userPrompt();

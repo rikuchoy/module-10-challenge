@@ -8,7 +8,7 @@ function userPrompt() {
             {
                 type: 'input',
                 message: 'Enter logo text (limited to 3 characters)',
-                name: 'text',
+                name: 'logoText',
             },
             {
                 type: 'input',
@@ -19,7 +19,7 @@ function userPrompt() {
                 type: 'list',
                 message: 'Select the shape you would like your logo to be',
                 choices: ['Cirlce', 'Square', 'Triangle'],
-                name: 'shape',
+                name: 'logoShape',
             },
             {
                 type: 'input',
@@ -28,6 +28,12 @@ function userPrompt() {
             },
         ])
         .then((answers) => {
-            if (answers.)
-        })
-}
+            if (answers.logoText.length > 3) {
+                console.log('Logo is limited to no more than 3 characters. Please try again.');
+                userPrompt();
+            } else {
+                writeToFile('logo.svg', answers);
+            }
+        });
+    };
+userPrompt();

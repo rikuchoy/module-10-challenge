@@ -7,5 +7,24 @@
   },
   "scripts": {
     "test": "jest"
-  }
+  },
+  "name": "module-10-challenge",
+  "description": "- [Module 10 Challenge: SVG Logo Maker](#module-10-challenge-svg-logo-maker)\r   - [Table of Contents](#table-of-contents)\r   - [Project Description](#project-description)\r   - [Installation](#installation)\r   - [Usage](#usage)\r   - [Contributing](#contributing)\r   - [Tests](#tests)\r   - [Questions](#questions)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rikuchoy/module-10-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rikuchoy/module-10-challenge/issues"
+  },
+  "homepage": "https://github.com/rikuchoy/module-10-challenge#readme"
 }

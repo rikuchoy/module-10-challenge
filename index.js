@@ -37,3 +37,39 @@ function userPrompt() {
         });
     };
 userPrompt();
+
+function writeToFile(fileName, answers) {
+    let svgString = "";
+    svgString = '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
+    svgString += "<g>";
+    svgString += `${answers.shape}`;
+  
+    let shapeChoice;
+    const shapeProperties = {
+      Circle: { tag: "circle", cx: "150", cy: "115", r: "80" },
+      Square: { tag: "rect", x: "73", y: "40", width: "160", height: "160" },
+      Triangle: { tag: "polygon", points: "150, 18 244, 182 56, 182" },
+    };
+  
+    if (answers.shape in shapeProperties) {
+      shapeChoice = new (eval(answers.shape))();
+      const shapeProps = shapeProperties[answers.shape];
+      let shapeString = `<${shapeProps.tag}`;
+      for (const prop in shapeProps) {
+        if (prop !== "tag") {
+          shapeString += ` ${prop}="${shapeProps[prop]}"`;
+        }
+      }
+      shapeString += ` fill="${answers.shapeBackgroundColor}"/>`;
+      svgString += shapeString;
+    }
+  
+    svgString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.text}</text>`;
+    svgString += "</g>";
+    svgString += "</svg>";
+  
+    fs.writeFile(fileName, svgString, (err) => {
+      err ? console.log(err) : console.log("Generated logo.svg");
+    });
+  }
+  
